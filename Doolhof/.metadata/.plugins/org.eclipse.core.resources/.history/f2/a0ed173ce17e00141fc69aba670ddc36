@@ -1,0 +1,9 @@
+//Rutger Le Jeune
+
+import java.awt.*;
+
+public class View extends JFrame {
+
+	private JButton btnLinks = new JButton("Links");
+	
+}

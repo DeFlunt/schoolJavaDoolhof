@@ -1,0 +1,124 @@
+//Rutger Le Jeune
+
+import java.io.*;
+
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		Doolhof d;
+		Tegel t;
+		
+		d = new Doolhof(3);
+		t = new T();
+		
+		System.out.println("Doolhof gemaakt");
+		
+		System.out.println(d.toString());
+		System.out.println("Nieuw doolhof");
+		
+		Positie pos = new Positie(1,1);
+		
+		d.getTegel(pos).initVentje();
+		
+		System.out.println(d.toString());
+		//System.out.println("Nieuw doolhof");
+		
+		//System.out.println(d.getPosVentje().toString());
+		
+		try
+		{
+			d.moveVentje(Doolhof.RECHTS);
+		}
+		
+		catch (PositieError fout)
+		{
+			
+			System.out.println("Verplaatsing gaat niet" + fout);
+		}
+		
+		System.out.println("------------------------------------------------------");
+		System.out.println(d.toString());
+		
+		try
+		{
+			d.moveVentje(Doolhof.LINKS);
+		}
+		
+		catch (PositieError fout)
+		{
+			System.out.println("Verplaatsing gaat niet");
+		}
+		
+		System.out.println("------------------------------------------------------");
+		System.out.println(d.toString());
+		
+		try
+		{
+			d.moveVentje(Doolhof.BOVEN);
+		}
+		
+		catch (PositieError fout)
+		{
+			System.out.println("Verplaatsing gaat niet");
+		}
+		
+		System.out.println("------------------------------------------------------");
+		System.out.println(d.toString());
+		
+		try
+		{
+			d.moveVentje(Doolhof.ONDER);
+		}
+		
+		catch (PositieError fout)
+		{
+			System.out.println("Verplaatsing gaat niet");
+		}
+		
+		System.out.println("------------------------------------------------------");
+		System.out.println(d.toString());
+		
+		try
+		{
+			d.moveVentje(Doolhof.RECHTS);
+		}
+		
+		catch (PositieError fout)
+		{
+			System.out.println("Verplaatsing gaat niet");
+		}
+		
+		System.out.println("------------------------------------------------------");
+		System.out.println(d.toString());
+		
+		try
+		{
+			d.moveVentje(Doolhof.RECHTS);
+		}
+		
+		catch (PositieError fout)
+		{
+			System.out.println("Verplaatsing gaat niet");
+		}
+		
+		System.out.println("------------------------------------------------------");
+		System.out.println(d.toString());
+		
+		try
+		{
+			d.moveVentje(Doolhof.ONDER);
+		}
+		
+		catch (PositieError fout)
+		{
+			System.out.println("Verplaatsing gaat niet");
+		}
+		
+		System.out.println("------------------------------------------------------");
+		System.out.println(d.toString());
+
+	}
+
+}

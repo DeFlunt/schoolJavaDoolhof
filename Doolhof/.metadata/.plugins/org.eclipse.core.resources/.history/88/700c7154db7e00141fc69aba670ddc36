@@ -1,0 +1,175 @@
+//Rutger Le Jeune
+
+public abstract class Tegel {
+
+	public static final int LEEG = 0;
+	public static final int MUUR = 1;
+	public static final int VENTJE = 2;
+	public static final int GOUD = 3;
+	
+	protected Vakje[][] vakjes = new Vakje[3][3];
+	protected int rotatie = 0;
+	
+	public Tegel()
+	{
+		//System.out.println("Begint met het maken van een tegel");
+		
+		
+	}
+	
+	public void setVakjes(Vakje[][] v)
+	{
+		vakjes = v;
+	}
+	
+	public Vakje[][] getVakjes()
+	{
+		return vakjes;
+	}
+	
+	public Vakje getVakje(Positie pos)
+	{
+		//System.out.println("Geeft juiste vakje terug");
+		return vakjes[pos.getX()][pos.getY()];
+	}
+	
+	public void setVakje(Positie pos, Vakje v)
+	{
+		vakjes[pos.getX()][pos.getY()] = v;
+	}
+	
+	public int getRotatie()
+	{
+		return rotatie;
+	}
+	
+	public void setRotatie(int r)
+	{
+		rotatie = r;
+	}
+	
+	public void draai(int hoek)
+	{
+		//System.out.println("Start met draaien");
+		
+		setRotatie(hoek);
+		int h;
+		h = hoek/90;
+		while (h != 0)
+		{
+			Vakje[][] tijdelijk = new Vakje[3][3];
+			int x;
+			int y;
+			
+			x = 0;
+			while (x != 3)
+			{
+				y = 0;
+				while (y != 3)
+				{
+					tijdelijk[x][y] = vakjes[x][y];
+					y++;
+				}
+				x++;
+			}
+			
+			//System.out.println("Tegel gekopieerd");
+			
+			x = 0;
+			while (x != 3)
+			{
+				y = 0;
+				while (y != 3)
+				{
+					vakjes[2-y][x] = tijdelijk[x][y];
+					y++;
+				}
+				x++;
+			}
+			h--;
+			
+			//System.out.println("Tegel gedraaid");
+		}
+		
+	}
+	
+	public Positie getPosVentje()
+	{
+		boolean v = false;
+		Positie pos=null;
+		
+		int x;
+		int y;
+				
+		x = 0;
+		while (x != 3)
+		{
+			y = 0;
+			while (y != 3)
+			{
+				if (vakjes[x][y].isVentje() == true)
+				{
+					v = true;
+					pos = new Positie(x,y);
+				}
+				y++;
+			}
+			x++;
+		}
+		
+		if (v == true)
+			return pos;
+		else
+			return null;
+	}
+	
+	public void initVentje()
+	{
+		vakjes[1][1].setInhoud(Tegel.VENTJE);
+	}
+	
+	public void initGoud()
+	{
+		vakjes[1][1].setInhoud(Tegel.GOUD);
+	}
+		
+	public String toStringBoven()
+	{
+		String woord = "";
+		
+		woord += "" + vakjes[0][0].toString() + vakjes[1][0].toString() + vakjes[2][0].toString();
+		
+		return woord;
+	}
+	
+	public String toStringMidden()
+	{
+		String woord = "";
+		
+		woord += "" + vakjes[0][1].toString() + vakjes[1][1].toString() + vakjes[2][1].toString();
+		
+		return woord;
+	}
+	
+	public String toStringOnder()
+	{
+		String woord = "";
+		
+		woord += "" + vakjes[0][2].toString() + vakjes[1][2].toString() + vakjes[2][2].toString();
+		
+		return woord;
+	}
+	
+	public String toString()
+	{
+		String woord = "";
+		
+		woord += this.toStringBoven() + "\n";
+		woord += this.toStringMidden() + "\n";
+		woord += this.toStringOnder() + "\n";
+		
+		return woord;
+	}
+		
+	
+}

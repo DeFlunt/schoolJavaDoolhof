@@ -1,0 +1,18 @@
+//Rutger Le Jeune
+
+import java.io.*;
+
+public class Controller {
+
+	public static void main(String[] args) {
+		
+		System.out.println("Controller begint te werken");
+	
+		Doolhof d = new Doolhof(3);
+		
+		View v = new View(d.getGrootte());
+		v.updateView(d);
+
+	}
+
+}

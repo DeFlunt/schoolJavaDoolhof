@@ -1,0 +1,15 @@
+//Rutger Le Jeune
+
+import java.awt.*;
+import javax.swing.*;
+
+public class DoolhofV {
+	
+	private JPanel doolhof;
+	
+	public DoolhofV(int n)
+	{
+		doolhof = new JPanel(new GridLayout(n,n));
+	}
+
+}

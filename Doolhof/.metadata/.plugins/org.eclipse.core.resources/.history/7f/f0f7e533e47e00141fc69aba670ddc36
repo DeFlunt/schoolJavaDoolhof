@@ -1,0 +1,30 @@
+//Rutger Le Jeune
+
+import java.awt.*;
+import javax.swing.*;
+
+public class DoolhofV extends JPanel {
+	
+	private TegelV[];
+	
+	public DoolhofV(int n)
+	{
+		this.setLayout(new GridLayout(n,n));
+		int x = 0;
+		int y = 0;
+		
+		while (x < n)
+		{
+			while (y < n)
+			{
+				TegelV tegel = new TegelV();
+				this.add(tegel.getTegel());
+				y++;
+			}
+			y = 0;
+			x++;
+		}
+		
+	}
+
+}

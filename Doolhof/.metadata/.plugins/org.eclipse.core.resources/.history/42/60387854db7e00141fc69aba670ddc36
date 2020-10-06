@@ -1,0 +1,286 @@
+//Rutger Le Jeune
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Doolhof {
+
+	public static final int LINKS = 4;
+	public static final int BOVEN = 5;
+	public static final int RECHTS = 6;
+	public static final int ONDER = 7;
+	
+	private Tegel[][] tegels;
+	private int grootte;
+	private ArrayList<Tegel> lijst = new ArrayList<Tegel>();
+	
+	public Doolhof(int n)
+	{
+		tegels = new Tegel[2*n][2*n];
+		int teller = 0;
+		while(teller < n*n)
+		{
+			lijst.add(new T());
+			teller++;
+		}
+		teller = 0;
+		
+		while(teller < n*n)
+		{
+			lijst.add(new Cross());
+			teller++;
+		}
+		teller = 0;
+		
+		while(teller < n*n)
+		{
+			lijst.add(new Straight());
+			teller++;
+		}
+		teller = 0;
+		
+		while(teller < n*n)
+		{
+			lijst.add(new Bend());
+			teller++;
+		}
+		teller = 0;
+		
+		Collections.shuffle(lijst);
+		
+		int x = 0;
+		int y = 0;
+		
+		while(x < 2*n)
+		{
+			while(y < 2*n)
+			{
+				lijst.get(teller).draai((int) (Math.random()*2.5));
+				tegels[x][y] = lijst.get(teller);
+				y++;
+			}
+			x++;
+		}
+		
+		
+		
+		/*System.out.println("Begint met het maken van een nieuw Doolhof");
+		tegels = new Tegel[3][3];
+		tegels[0][0] = new T();
+		tegels[1][0] = new Cross();
+		tegels[2][0] = new Straight();
+		tegels[0][1] = new Bend();
+		tegels[1][1] = new Cross();
+		tegels[2][1] = new T();
+		tegels[0][2] = new Bend();
+		tegels[1][2] = new Cross();
+		tegels[2][2] = new Bend();
+		grootte = n;*/
+		
+	}
+	
+	public Tegel[][] getTegels()
+	{
+		return tegels;
+	}
+	
+	public void setTegels(Tegel[][] t)
+	{
+		tegels = t;
+	}
+	
+	public int getGrootte()
+	{
+		return grootte;
+	}
+	
+	public void setGrootte(int g)
+	{
+		grootte = g;
+	}
+	
+	public Tegel getTegel(Positie pos)
+	{
+		return tegels[pos.getX()][pos.getY()];
+	}
+	
+	public void setTegel(Positie pos, Tegel t)
+	{
+		tegels[pos.getX()][pos.getY()] = t;
+	}
+	
+	public Positie getPosVentje()
+	{		
+		int x;
+		int y;
+		Positie pos=null;
+				
+		x = 0;
+		while (x != 3)
+		{
+			y = 0;
+			while (y != 3)
+			{
+				if (tegels[x][y].getPosVentje() != null)
+				{
+					pos = new Positie(x,y);
+					return pos;
+				}
+				y++;
+			}
+			x++;
+		}
+		
+		return pos;
+	}
+	
+	public void moveVentje(int richting)  throws PositieError // Links = 4; Boven = 5; Rechts = 6; Onder = 7;
+	{
+		//System.out.println("Begin move Ventje");
+		
+		Positie posVentje = this.getTegel(this.getPosVentje()).getPosVentje();
+		Positie posVentje2 = this.getPosVentje();
+		Positie posRichting = null;
+		boolean inTegel = true;
+		Positie posBuurtTegel = null;
+		
+		if (richting == Doolhof.LINKS && posVentje.getX() == 0 && posVentje.getY() == 1)
+		{
+			inTegel = false;
+			posBuurtTegel = new Positie(this.getPosVentje().getXLinks(),this.getPosVentje().getYLinks());
+			posRichting = new Positie(2,1);
+		}
+		
+		else if (richting == Doolhof.LINKS)
+		{
+			posRichting = new Positie(posVentje.getXLinks(),posVentje.getYLinks());
+		}
+		
+		else if (richting == Doolhof.BOVEN && posVentje.getX() == 1 && posVentje.getY() == 0)
+		{
+			inTegel = false;
+			posBuurtTegel = new Positie(this.getPosVentje().getXBoven(),this.getPosVentje().getYBoven());
+			posRichting = new Positie(1,2);
+		}
+		
+		else if (richting == Doolhof.BOVEN)
+		{
+			posRichting = new Positie(posVentje.getXBoven(),posVentje.getYBoven());
+		}
+		
+		else if (richting == Doolhof.RECHTS && posVentje.getX() == 2 && posVentje.getY() == 1)
+		{
+			inTegel = false;
+			posBuurtTegel = new Positie(this.getPosVentje().getXRechts(),this.getPosVentje().getYRechts());
+			posRichting = new Positie(0,1);
+		}
+
+		else if (richting == Doolhof.RECHTS)
+		{
+			//System.out.println("Ventje wilt naar rechts");
+			posRichting = new Positie(posVentje.getXRechts(),posVentje.getYRechts());
+		}
+		
+		else if (richting == Doolhof.ONDER && posVentje.getX() == 1 && posVentje.getY() == 2)
+		{
+			inTegel = false;
+			posBuurtTegel = new Positie(this.getPosVentje().getXOnder(),this.getPosVentje().getYOnder());
+			posRichting = new Positie(1,0);
+		}
+
+		else if (richting == Doolhof.ONDER)
+		{
+			posRichting = new Positie(posVentje.getXOnder(),posVentje.getYOnder());
+		}
+		
+		else 
+		{
+			throw new PositieError("");
+		}
+		
+		
+		//System.out.println(posRichting.toString());
+		
+		if (this.getTegel(this.getPosVentje()).getVakje(posRichting).isToegankelijk() == true && inTegel == true)
+		{
+			System.out.println("Ventje verplaatst want de ruimte is leeg");
+			
+			this.getTegel(posVentje2).getVakje(posVentje).setInhoud(Tegel.LEEG);
+			this.getTegel(posVentje2).getVakje(posRichting).setInhoud(Tegel.VENTJE);		
+		}
+		
+		else if (posBuurtTegel != null && inTegel == false)
+		{
+			if (this.getTegel(posBuurtTegel).getVakje(posRichting).isToegankelijk() == true)
+			{
+				System.out.println("Andere tegel");
+				this.getTegel(posBuurtTegel).getVakje(posRichting).setInhoud(Tegel.VENTJE);
+				this.getTegel(posVentje2).getVakje(posVentje).setInhoud(Tegel.LEEG);
+			}
+			else
+			{
+				System.out.println("Werpt een Error");
+				throw new PositieError("");
+			}
+			
+		}
+		
+		else
+		{
+			System.out.println("Werpt een Error");
+			throw new PositieError("");
+		}
+		
+		
+	}
+	
+	public String toString()
+	{
+		System.out.println("Begint met de toString");
+		
+		String woord = "";
+		int tellerHorizontaal = 0;
+		int tellerVerticaal = 0;
+		
+		while (tellerVerticaal < grootte)
+		{
+			//System.out.println("Begint met het maken van de eerste rij");
+			
+			while (tellerHorizontaal < grootte)
+			{
+				woord += tegels[tellerHorizontaal][tellerVerticaal].toStringBoven();
+				tellerHorizontaal ++;
+			}
+			tellerHorizontaal = 0;
+			woord += "\n";
+			
+			//System.out.println("Begint met het maken van de tweede rij");
+			
+			while (tellerHorizontaal < grootte)
+			{
+				woord += tegels[tellerHorizontaal][tellerVerticaal].toStringMidden();
+				tellerHorizontaal ++;
+			}
+			tellerHorizontaal = 0;
+			woord += "\n";
+			
+			//System.out.println("Begint met het maken van de derde rij");
+			
+			while (tellerHorizontaal < grootte)
+			{
+				woord += tegels[tellerHorizontaal][tellerVerticaal].toStringOnder();
+				tellerHorizontaal ++;
+			}
+			
+			tellerHorizontaal = 0;
+			woord += "\n";
+			tellerVerticaal ++;
+			
+		}
+		
+		return woord;
+		
+	}
+	
+}

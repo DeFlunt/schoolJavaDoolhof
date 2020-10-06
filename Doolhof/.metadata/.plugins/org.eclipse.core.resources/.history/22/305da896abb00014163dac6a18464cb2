@@ -1,0 +1,71 @@
+//Rutger Le Jeune
+
+import java.io.*;
+import java.awt.event.*;
+
+public class Controller implements ActionListener {
+	
+	private View v;
+	private Doolhof d;
+	
+	public Controller() {
+		
+		//System.out.println("Controller begint te werken");
+	
+		d = new Doolhof(7);
+		
+		v = new View(d.getGrootte(), d);
+		v.getLinks().addActionListener(this);
+		v.getBoven().addActionListener(this);
+		v.getRechts().addActionListener(this);
+		v.getOnder().addActionListener(this);
+
+	}
+	
+	public static void main(String[] args)
+	{
+		Controller c = new Controller();
+	}
+	
+	public void actionPerformed(ActionEvent e)
+	{
+		
+		try
+		{
+			if (e.getSource()==v.getLinks())
+			{
+				d.moveVentje(Doolhof.LINKS);
+			}
+			
+		
+			if (e.getSource()==v.getBoven())
+			{
+				d.moveVentje(Doolhof.BOVEN);
+			}
+		
+			if (e.getSource()==v.getOnder())
+			{
+				d.moveVentje(Doolhof.ONDER);
+			}
+			
+			if (e.getSource()==v.getRechts())
+			{
+				d.moveVentje(Doolhof.RECHTS);
+			}
+		
+		}
+
+		catch (PositieError fout)
+		{
+			System.out.println("Muur!");
+		}
+	
+		catch (GoudGevonden fout)
+		{
+			System.out.println("Goud Gevonden");
+			v.updateView(d);
+			v.gewonnen();
+		}
+		v.updateView(d);
+	}	
+}

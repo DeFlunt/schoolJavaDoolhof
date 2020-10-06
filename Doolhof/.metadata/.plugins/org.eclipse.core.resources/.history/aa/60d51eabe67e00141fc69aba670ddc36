@@ -1,0 +1,31 @@
+// Rutger Le Jeune
+
+import java.awt.*;
+
+import javax.swing.*;
+
+public class TegelV extends JPanel {
+	
+	private JLabel[][] lijstVakjes;
+	
+	public TegelV()
+	{
+		this.setLayout(new GridLayout(3,3));
+		lijstVakjes = new JLabel[3][3];
+		int x = 0;
+		int y = 0;
+		
+		while (x < 3)
+		{
+			while (y < 3)
+			{
+				lijstVakjes[x][y] = new JLabel();
+				this.add(lijstVakjes[x][y]);
+				y++;
+			}
+			y = 0;
+			x++;
+		}
+	}
+	
+}

@@ -1,0 +1,15 @@
+
+public class Controller {
+
+	public static void main(String[] args) {
+	
+		Doolhof d;
+		
+		d = new Doolhof(3);
+		
+		View v = new View(d.getGrootte());
+		v.updateView(d);
+
+	}
+
+}

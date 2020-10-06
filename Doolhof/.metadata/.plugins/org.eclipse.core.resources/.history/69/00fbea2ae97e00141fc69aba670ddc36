@@ -1,0 +1,32 @@
+//Rutger Le Jeune
+
+import java.awt.*;
+
+import javax.swing.*;
+
+public class View extends JFrame {
+
+	private JButton btnLinks = new JButton("Links");
+	private JButton btnBoven = new JButton("Boven");
+	private JButton btnRechts = new JButton("Rechts");
+	private JButton btnOnder = new JButton("Onder");
+	private DoolhofV doolhof;
+	
+	public View(int n)
+	{
+		doolhof = new DoolhofV(n);
+		Container c = getContentPane();
+		
+		c.setLayout(new BorderLayout());
+		c.add(doolhof);
+		
+		setSize(300,300);
+		setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	/*public static void main(String[] args) {
+		new View(5);
+	}*/
+	
+}
